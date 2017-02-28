@@ -1,0 +1,78 @@
+﻿<?xml version='1.0' encoding='utf-8'?>
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="AvventoWebService.Properties" GeneratedClassName="Settings">
+  <Profiles />
+  <Settings>
+    <Setting Name="ProxyIPAddress" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">10.100.100.202</Value>
+    </Setting>
+    <Setting Name="MarketNumber" Type="System.Int32" Scope="Application">
+      <Value Profile="(Default)">10</Value>
+    </Setting>
+    <Setting Name="XmlSchemas" Type="System.String" Scope="Application">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="DownloadDataSchemaFile" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">DataDownload.xsd</Value>
+    </Setting>
+    <Setting Name="SendOrderInsertSchemaFile" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">SubmitOrder.xsd</Value>
+    </Setting>
+    <Setting Name="SuspendActiveOrderSchemaFile" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">SuspendActiveOrder.xsd</Value>
+    </Setting>
+    <Setting Name="DeleteActiveOrderSchemaFile" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">DeleteActiveOrder.xsd</Value>
+    </Setting>
+    <Setting Name="ResubmitSuspendedOrderSchemaFile" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">ResubmitSuspendedOrder.xsd</Value>
+    </Setting>
+    <Setting Name="ReduceOrderQuantitySchemaFile" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">ReduceActiveOrder.xsd</Value>
+    </Setting>
+    <Setting Name="SendCancelAllOrdersSchemaFile" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">CancelAllOrders.xsd</Value>
+    </Setting>
+    <Setting Name="EditSuspendedOrderSchemaFile" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">EditSuspendedOrder.xsd</Value>
+    </Setting>
+    <Setting Name="EditActiveOrderSchemaFile" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">EditActiveOrder.xsd</Value>
+    </Setting>
+    <Setting Name="SubmitBulkOrderSchemaFile" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">SubmitBulkOrder.xsd</Value>
+    </Setting>
+    <Setting Name="UseModelValidation" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">true</Value>
+    </Setting>
+    <Setting Name="ProxyPort" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">8028</Value>
+    </Setting>
+    <Setting Name="WaitTime" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">50</Value>
+    </Setting>
+    <Setting Name="WaitRetryAttempts" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">100</Value>
+    </Setting>
+    <Setting Name="InstrumentSubscriptionSchemaFile" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">InstrumentSubscription.xsd</Value>
+    </Setting>
+    <Setting Name="IndicesSubscriptionSchemaFile" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">IndicesSubscription.xsd</Value>
+    </Setting>
+    <Setting Name="AvventoFeedServiceContract" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">AtsWebFeedService</Value>
+    </Setting>
+    <Setting Name="DatasetForHistoricalDataRetrieval" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">7,8,16,89,129,146,5</Value>
+    </Setting>
+    <Setting Name="AvventoFeedServiceWsdl" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">http://10.240.18.196/FeedWebService/FeedWebService.svc?singleWsdl</Value>
+    </Setting>
+    <Setting Name="AvventoFeedServiceEndPoint" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">http://10.240.18.196/FeedWebService/FeedWebService.svc</Value>
+    </Setting>
+    <Setting Name="MaxRecordCount" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">5000</Value>
+    </Setting>
+  </Settings>
+</SettingsFile>
