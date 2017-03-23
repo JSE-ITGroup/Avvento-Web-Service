@@ -263,6 +263,7 @@
     </None>
     <None Include="Files\Schema\SubmitOrder.xsd">
       <SubType>Designer</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="Files\Schema\SuspendActiveOrder.xsd">
       <SubType>Designer</SubType>
