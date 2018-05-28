@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+   <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+         <xs:element name="Query">
+               <xs:complexType>
+                     <xs:sequence>
+                           <xs:element name="SuspendActiveOrder">
+                                 <xs:complexType>
+                                       <xs:all>
+                                             <xs:element name="InstrumentCode" type="xs:string"></xs:element>
+                                             <xs:element name="ActiveOrderId" type="xs:int"></xs:element>
+                                             <xs:element name="MemberCode" type="xs:string"></xs:element>
+                                             <xs:element name="DealerCode" type="xs:string"></xs:element>
+                                             <xs:element name="UserReference" type="xs:int"></xs:element>
+                                             <xs:element name="BuyOrSell" type="xs:string"></xs:element>
+                                       </xs:all>
+                                 </xs:complexType>
+                           </xs:element>
+                     </xs:sequence>
+               </xs:complexType>
+         </xs:element>
+   </xs:schema>

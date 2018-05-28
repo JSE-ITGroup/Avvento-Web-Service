@@ -878,7 +878,7 @@ namespace AvventoWebService
             bool _useModelValidation;
 
             waitTime = 500;
-            retry = 100;
+            retry = 500;
             useModelValidation = false;
 
             if (!string.IsNullOrEmpty(Properties.Settings.Default.WaitTime) &&
@@ -1734,7 +1734,7 @@ namespace AvventoWebService
             int cnt = 0;
             dataDownloadTriggered = false;
             anotherSetOfClientDataToCome = true;
-
+            bool _anotherSetOfInstrumentToCome = false;
             LiveFeedServiceHelper liveFeedServiceHelper = new LiveFeedServiceHelper();
 
             if (avventoApi == null)
@@ -1754,23 +1754,45 @@ namespace AvventoWebService
             {
                 case 1: // Display Data
                     {
-
+                        
                         avventoApi.SendFileDownloadMessage(FileIdentifier.Display, userName, false, startDate);
                         avventoApi.FileDownloads.ReceivedDisplayCallback = (display, action, anotherSetToCome) =>
                         {
-
+                            _anotherSetOfInstrumentToCome = anotherSetToCome;
                             dataDownloadTriggered = true;
-                            List<MarketDisplayInformation> displaydataList = DataDownloadDisplayData(display);
-                            xmlresponse = HelperMethods.Serialize<List<MarketDisplayInformation>>(displaydataList);
+                            foreach (var item in display)
+                            {
+                                Cache.Update(Cache.DisplayDataStructure, item.IdDisplay, item, action);
+                            }
+
+                           /* List<MarketDisplayInformation> displaydataList = DataDownloadDisplayData(display);
+                            xmlresponse = HelperMethods.Serialize<List<MarketDisplayInformation>>(displaydataList);*/
 
                         };
-                        DataAvailable();
+                        if (dataDownloadTriggered)
+                        {
+                            while (_anotherSetOfInstrumentToCome)
+                            {
+                                Thread.Sleep(10);
+                            }
+                        }
+                        if (Cache.DisplayDataStructure.Count > 0)
+                        {
+                            List<MarketDisplayInformation> displaydataList = DataDownloadDisplayData(Cache.DisplayDataStructure);
+                            xmlresponse = HelperMethods.Serialize<List<MarketDisplayInformation>>(displaydataList);
+                        }
+                        else
+                        {
+                            List<MarketDisplayInformation> displaydataList = new List<MarketDisplayInformation>();
+                            xmlresponse = HelperMethods.Serialize<List<MarketDisplayInformation>>(displaydataList);
+                        }
+                        /*DataAvailable();
                         if (xmlresponse == null && dataDownloadTriggered == false)
                         {
                             List<MarketDisplayInformation> displaydataList = new List<MarketDisplayInformation>();
                             // displaydataList.Add(new MarketDisplayInformation());
                             xmlresponse = HelperMethods.Serialize<List<MarketDisplayInformation>>(displaydataList);
-                        }
+                        }*/
 
 
                         break;
@@ -1779,19 +1801,43 @@ namespace AvventoWebService
                 case 2:  // Instrument Data
                     {
 
+
                         avventoApi.SendFileDownloadMessage(FileIdentifier.Instruments, userName, false, startDate);
                         avventoApi.FileDownloads.ReceivedInstrumentCallBack = (instrument, action, anotherSetToCome) =>
                         {
+                            _anotherSetOfInstrumentToCome = anotherSetToCome;
                             dataDownloadTriggered = true;
-                            List<InstrumentData> instrumentDataList = DataDownloadInstrumentData(instrument);
-                            xmlresponse = HelperMethods.Serialize<List<InstrumentData>>(instrumentDataList);
+
+                            foreach (var item in instrument)
+                            {
+                                Cache.Update(Cache.InstrumentDataStructure, item.IdInstrument, item, action);
+                            }
+                            //dataDownloadTriggered = true;
+                            
                         };
-                        DataAvailable();
-                        if (xmlresponse == null && dataDownloadTriggered == false)
+                       // DataAvailable();
+                        if(dataDownloadTriggered)
+                        {
+                            while(_anotherSetOfInstrumentToCome)
+                            {
+                                Thread.Sleep(10);
+                            }
+                        }
+                        if(Cache.InstrumentDataStructure.Count > 0)
+                        {
+                            List<InstrumentData> instrumentDataList = DataDownloadInstrumentData(Cache.InstrumentDataStructure);
+                            xmlresponse = HelperMethods.Serialize<List<InstrumentData>>(instrumentDataList);
+                        }
+                        else
                         {
                             List<InstrumentData> instrumentDataList = new List<InstrumentData>();
                             xmlresponse = HelperMethods.Serialize<List<InstrumentData>>(instrumentDataList);
                         }
+                        /*if (xmlresponse == null && dataDownloadTriggered == false)
+                        {
+                            List<InstrumentData> instrumentDataList = new List<InstrumentData>();
+                            xmlresponse = HelperMethods.Serialize<List<InstrumentData>>(instrumentDataList);
+                        }*/
 
                         break;
                     }
@@ -2748,10 +2794,10 @@ namespace AvventoWebService
         /// <param name="instrumentdata">The instrumentdata.</param>
         /// <returns></returns>
         /// <autogeneratedoc />
-        public List<InstrumentData> DataDownloadInstrumentData(List<InstrumentStructure> instrumentdata)
+        public List<InstrumentData> DataDownloadInstrumentData(ConcurrentDictionary<int, InstrumentStructure> instrumentdata)
         {
             List<InstrumentData> instrumentDataList = new List<InstrumentData>();
-            foreach (var item in instrumentdata)
+            foreach (var item in instrumentdata.Values)
             {
                 string displayName = HelperMethods.ParsePascal(item.DisplayName).Trim();
 
@@ -2889,13 +2935,13 @@ namespace AvventoWebService
         /// <param name="displaydata">The displaydata.</param>
         /// <returns></returns>
         /// <autogeneratedoc />
-        public List<MarketDisplayInformation> DataDownloadDisplayData(List<DisplayStructure> displaydata)
+        public List<MarketDisplayInformation> DataDownloadDisplayData(ConcurrentDictionary<int, DisplayStructure> displaydata)
         {
 
             List<MarketDisplayInformation> marketDisplayInformationList = new List<MarketDisplayInformation>();
 
 
-            foreach (var item in displaydata)
+            foreach (var item in displaydata.Values)
             {
 
                 MarketDisplayInformation marketDisplayInformation = new MarketDisplayInformation();
